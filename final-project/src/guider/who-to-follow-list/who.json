@@ -1,0 +1,21 @@
+[
+    {
+      "_id": 5610,
+      "userName": "BMW",
+      "handle": "BMW",
+      "avatarIcon": "BMW.png"
+    },
+    {
+      "_id": 4550,
+      "userName": "TESLA",
+      "handle": "TESLA",
+      "avatarIcon": "TESLA.png"
+    },
+    {
+      "_id": 5700,
+      "userName": "PORSCHE",
+      "handle": "PORSCHE",
+      "avatarIcon": "PORSCHE.jpeg"
+    }
+]
+   

@@ -1,0 +1,32 @@
+[
+    {
+        "_id": 1,
+        "userName": "Blahaj",
+        "handle": "Blahaj",
+        "avatarIcon": "blahaj-face.jpg"
+    },
+    {
+        "_id": 2,
+        "userName": "Djungelskog",
+        "handle": "Djungelskog",
+        "avatarIcon": "djungelskog-summer.jpg"
+    },
+    {
+        "_id": 3,
+        "userName": "Blavingad",
+        "handle": "Blavingad",
+        "avatarIcon": "blavingad.png"
+    },
+    {
+        "_id": 4,
+        "userName": "BigBear",
+        "handle": "BigBear",
+        "avatarIcon": "big-bear.png"
+    },
+    {
+        "_id": 5,
+        "userName": "Bed O' Clock",
+        "handle": "bedoclock",
+        "avatarIcon": "bed-o-clock.png"
+    }
+]

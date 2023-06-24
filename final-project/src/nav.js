@@ -1,28 +1,12 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import links from "./nav.json";
-
-
-function Navigation(){
-    const location = useLocation();
-    const {pathname} = location;
-
-
-    
-    return(
-        <div className='nav nav-pills'>
-
-            {links.map(({path,label}) => (
-                <Link
-                className= {`nav-link ${pathname === path? "active" : ""}`} to = {path}
-                >
-                {label}
-                </Link>
-            ))}
-      
-      
-    </div>
+import { Link } from "react-router-dom";
+function Nav() {
+    return (
+        <nav className="nav nav-tabs mb-2">
+            <Link className="nav-link" to="/labs/a3">A3</Link>
+            <Link className="nav-link" to="/labs/a4">A4</Link>
+            <Link className="nav-link" to="/hello">Hello</Link>
+            <Link className="nav-link" to="/tuiter">Tuiter</Link>
+        </nav>
     );
 }
-
-export default Navigation;
+export default Nav;

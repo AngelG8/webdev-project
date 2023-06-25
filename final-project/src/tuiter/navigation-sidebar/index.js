@@ -23,7 +23,12 @@ const NavigationSidebar = () => {
             {!currentUser && <Link className="list-group-item text-capitalize" to="/tuiter/register">
                 <i class="fa-solid fa-address-card"></i> <span class="d-none d-xxl-inline">Register</span>
             </Link>}
+            <div className="list-group">
+            JSON.stringify(currentUser);
+            </div>
         </div>
+
+
     );
 };
 export default NavigationSidebar;

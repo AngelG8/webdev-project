@@ -9,8 +9,10 @@ import { TbCalendarStats } from "react-icons/tb";
 import { createTuitThunk } from "./services/tuits-thunks";
 import { useDispatch } from "react-redux";
 import { templateTuit } from "./templates/template-tuit"
+import { useSelector } from "react-redux";
 
 const WhatsHappening = () => {
+    const { currentUser } = useSelector((state) => state.user);
     let [whatsHappening, setWhatsHappening] = useState('');
     const dispatch = useDispatch();
     const tuitClickHandler = () => {
@@ -23,6 +25,7 @@ const WhatsHappening = () => {
         console.log(whatsHappening);
     }
     return (
+        
         <div className="row">
             <div className="col-auto">
                 <img className="rounded-circle" src="/images/blahaj-face.jpg" width={64} />

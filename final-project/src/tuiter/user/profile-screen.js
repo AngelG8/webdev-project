@@ -29,7 +29,7 @@ function ProfileScreen() {
             }
         };
         fetchProfile();
-    }, []);
+    }, [dispatch, navigate]);
 
     const handleLogout = async () => {
         await dispatch(logoutThunk());

@@ -27,6 +27,6 @@ export const updateTuit = async (tuit) => {
 }
 export const findMyTuits = async () => {
     const response = await api.get(`${API_BASE}/myTuits`);
-    console.log("findMytuits" + response.data)
+    // console.log("findMytuits" + response.data)
     return response.data;
 }

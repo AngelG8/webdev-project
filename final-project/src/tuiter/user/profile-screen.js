@@ -28,10 +28,10 @@ function ProfileScreen() {
 
     useEffect(() => {
         const fetchProfile = async () => {
-            // console.log("fetchProfile-----------------")
+            console.log("fetchProfile-----------------")
             try {
                 const { payload } = await dispatch(profileThunk());
-                // console.log(payload)
+                console.log(payload)
                 setProfile(payload);
             } catch (error) {
                 console.error(error);
@@ -57,7 +57,8 @@ function ProfileScreen() {
                     console.log(follower)
                     return follower;
                 }))
-                console.log("myFollowers:" + followers)
+                console.log("myFollowers:")
+                console.log(followers)
                 setMyFollowers(followers);
             } catch (error) {
                 console.error(error);
@@ -80,7 +81,8 @@ function ProfileScreen() {
             console.error(error);
         }
     };
-
+    console.log("--------- myFollowers -----------")
+    console.log(myFollowers)
     return (
         <div>
             <h1>Profile Screen</h1>
@@ -153,20 +155,31 @@ function ProfileScreen() {
             <button className="btn btn-primary mt-2" onClick={save}>
                 Save
             </button>
-            <ul className="list-group">
-                <input
-                    className="form-control"
-                    type="text"
-                    value={profile.followers.length ?? ""}
-                />
-                {myFollowers.map((user) => (
+            <ul className="list-group mt-2">
+                <li className="list-group-item">
+                    <h4>Followers</h4>
+                    <div>{myFollowers.length ?? ""}</div>
+                </li>
+                {
+                    myFollowers.map((user) => (
                     <li className="list-group-item" key={user._id}>
                         {user.firstName} {user.lastName}
                     </li>
                 ))}
             </ul>
-            <label>My Tuits</label>
-            <pre>{JSON.stringify(myTuits, null, 2)}</pre>
+
+            {/*<pre>{JSON.stringify(myTuits, null, 2)}</pre>*/}
+            <ul className="list-group mt-2">
+                <li className="list-group-item">
+                    <h4>My Tuits</h4>
+                </li>
+                {myTuits.map((tuit) => (
+                    <li className="list-group-item">
+                        <div><span className="fw-bolder">{tuit.topic}</span> <i className="fas fa-check-circle wd-blue"></i> {tuit.handle} • {tuit.time}</div>
+                        <div>{tuit.tuit}</div>
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }

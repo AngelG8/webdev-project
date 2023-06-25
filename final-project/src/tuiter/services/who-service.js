@@ -5,14 +5,14 @@ const WHO_API = `${API_BASE}/users`;
 const api = axios.create({ withCredentials: true });
 
 export const findAllUsers = async () => {
-    console.log("---------------findAllUsers ")
+    // console.log("---------------findAllUsers ")
     const response = await api.get(WHO_API);
     const allUsers = response.data;
     return allUsers;
 }
 
 export const findUserById = async (uid) => {
-    console.log("---------------findUserById ")
+    // console.log("---------------findUserById ")
     const response = await api.get(`${WHO_API}/${uid}`);
     const user = response.data;
     return user;

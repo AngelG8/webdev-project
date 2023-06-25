@@ -1,13 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
-import { profileThunk, logoutThunk, updateUserThunk } from "../services/auth-thunks";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router";
+import {
+    logoutThunk,
+    profileThunk,
+    updateUserThunk
+} from "../services/auth-thunks";
 import * as tuitsService from "../services/tuits-service";
+import * as whoService from "../services/who-service";
 
 function ProfileScreen() {
     const { currentUser } = useSelector((state) => state.user);
     const [profile, setProfile] = useState(currentUser);
     const [myTuits, setMyTuits] = useState([]);
+    const [myFollowers, setMyFollowers] = useState([]);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -21,10 +28,10 @@ function ProfileScreen() {
 
     useEffect(() => {
         const fetchProfile = async () => {
-            console.log("fetchProfile-----------------")
+            // console.log("fetchProfile-----------------")
             try {
                 const { payload } = await dispatch(profileThunk());
-                console.log(payload)
+                // console.log(payload)
                 setProfile(payload);
             } catch (error) {
                 console.error(error);
@@ -32,17 +39,33 @@ function ProfileScreen() {
             }
         };
         const fetchMyTuits = async () => {
-            console.log("fetchMyTuits====================")
+            // console.log("fetchMyTuits====================")
             try {
                 const tuits = await tuitsService.findMyTuits();
-                console.log("profile myTuit:" + tuits)
+                // console.log("profile myTuit:" + tuits)
                 setMyTuits(tuits);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        const fetchMyFollowers = async () => {
+            console.log("fetchMyFollowers====================")
+            try {
+                let followerIds = !profile.followers ? [] : profile.followers;
+                let followers = await Promise.all(followerIds.map(async followerId => {
+                    const follower = await whoService.findUserById(followerId)
+                    console.log(follower)
+                    return follower;
+                }))
+                console.log("myFollowers:" + followers)
+                setMyFollowers(followers);
             } catch (error) {
                 console.error(error);
             }
         };
         fetchProfile();
         fetchMyTuits();
+        fetchMyFollowers();
     }, []);
 
     const handleLogout = async () => {
@@ -130,6 +153,19 @@ function ProfileScreen() {
             <button className="btn btn-primary mt-2" onClick={save}>
                 Save
             </button>
+            <ul className="list-group">
+                <input
+                    className="form-control"
+                    type="text"
+                    value={profile.followers.length ?? ""}
+                />
+                {myFollowers.map((user) => (
+                    <li className="list-group-item" key={user._id}>
+                        {user.firstName} {user.lastName}
+                    </li>
+                ))}
+            </ul>
+            <label>My Tuits</label>
             <pre>{JSON.stringify(myTuits, null, 2)}</pre>
         </div>
     );

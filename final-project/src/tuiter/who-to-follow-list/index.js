@@ -1,15 +1,29 @@
-import React from "react";
+import React, {useEffect} from "react";
 import WhoToFollowListItem from "./who-to-follow-list-item";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {findWhoThunk} from "../services/who-thunks";
+
 const WhoToFollowList = () => {
-    const whoArray = useSelector((state) => state.who);
-    return (
+  const { who, loading } = useSelector(state => state.who);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(findWhoThunk())
+  }, [])
+  console.log(who)
+  // var loading = true
+  // var whoArray = []
+  return (
         <ul className="list-group">
             <li className="list-group-item">
                 <h3>Who to follow</h3>
             </li>
+            {loading &&
+                <li className="list-group-item">
+                  Loading...
+                </li>
+            }
             {
-                whoArray.map(who =>
+                who.map(who =>
                     <WhoToFollowListItem
                         key={who._id}
                         who={who} />

@@ -9,14 +9,14 @@ export const loginThunk = createAsyncThunk(
 );
 
 export const profileThunk = createAsyncThunk(
-    "users/profile", async () => {
+    "user/profile", async () => {
         const currentUser = await authService.profile();
         return currentUser;
     }
 );
 
 export const logoutThunk = createAsyncThunk(
-    "auth/logout", async () => {
+    "user/logout", async () => {
         return await authService.logout();
     }
 );

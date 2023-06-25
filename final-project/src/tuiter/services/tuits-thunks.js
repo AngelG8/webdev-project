@@ -26,3 +26,9 @@ export const updateTuitThunk =
         async (tuit) =>
             await service.updateTuit(tuit)
     )
+// export const findMyTuitsThunk =
+//     createAsyncThunk(
+//         'tuits/findMyTuits',
+//         async () =>
+//             await service.findMyTuits()
+//     )

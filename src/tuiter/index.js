@@ -13,6 +13,7 @@ import LoginScreen from "./user/login-screen";
 import RegisterScreen from "./user/register-screen";
 import authReducer from "./reducers/auth-reducer";
 import AuthContext from "./services/auth-context";
+import DetailsScreen from "./details/details-screen";
 
 const store = configureStore({
     reducer: {
@@ -39,6 +40,7 @@ function Tuiter() {
                                 <Route path="/profile" element={<ProfileScreen />} />
                                 <Route path="/login" element={<LoginScreen />} />
                                 <Route path="/register" element={<RegisterScreen />} />
+                                <Route path="/details" element={<DetailsScreen />} />
                             </Routes>
                         </div>
                         <div class="col-4 d-none d-lg-block">

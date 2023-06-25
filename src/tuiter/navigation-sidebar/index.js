@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 const NavigationSidebar = () => {
     const { pathname } = useLocation();
     const [ignore, tuiter, active] = pathname.split("/");
-    const links = ["home", "search", "notifications", "messages", "bookmarks", "lists", "profile", "more"];
-    const icons = ["fas fa-home", "fas fa-magnifying-glass", "fas fa-bell", "fas fa-envelope", "fas fa-bookmark", "fas fa-list", "fas fa-user", "fas fa-ellipsis-h"];
+    const links = ["home", "search", "notifications", "messages", "bookmarks", "lists", "profile", "details", "more"];
+    const icons = ["fas fa-home", "fas fa-hashtag", "fas fa-bell", "fas fa-envelope", "fas fa-bookmark", "fas fa-list", "fas fa-user", "fas fa-clipboard", "fas fa-ellipsis-h"];
     const { currentUser } = useSelector((state) => state.user);
 
     return (

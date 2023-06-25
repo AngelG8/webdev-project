@@ -8,29 +8,32 @@ const WhoToFollowListItem = ({who}) => {
     const [profile, setProfile] = useState(currentUser);
     const [followed, setFollowed] = useState(false);
 
-    // console.log("------ who currentUser ")
-    // console.log(profile)
+    console.log("------ who currentUser ")
+    console.log(profile)
 
     const dispatch = useDispatch();
     useEffect(() => {
-        if (currentUser && currentUser.followers && currentUser.followers.includes(who._id)) {
+        if (currentUser && currentUser.following && currentUser.following.includes(who._id)) {
             setFollowed(true);
         }
-    }, [currentUser, currentUser?.followers, who._id]);
+    }, [currentUser, currentUser?.following, who._id]);
 
     const handleFollow = async () => {
-        if (!profile.followers) {
-            console.error("profile.follower is null")
-            return; // Exit the function if followers array is undefined
+        let newFollowings
+        if (typeof profile.following === 'undefined') {
+            console.error("profile.following is undefined")
+            // return; // Exit the function if following array is undefined
+            newFollowings = [who._id]
+        } else {
+            newFollowings = [...profile.following, who._id]
         }
-        const newFollowers = [...profile.followers, who._id]
-        // console.log("follower to add ")
-        // console.log(who)
-        const newProfile = { ...profile, followers: newFollowers};
+        console.log("------ newFollowings------ ")
+        console.log(newFollowings)
+        const newProfile = { ...profile, following: newFollowings};
         setProfile(newProfile);
         setFollowed(true);
-        // console.log("------ handleFollow newProfile ")
-        // console.log(newProfile)
+        console.log("------ handleFollow newProfile ")
+        console.log(newProfile)
         try {
             await dispatch(updateUserThunk(newProfile));
         } catch (error) {
@@ -38,15 +41,15 @@ const WhoToFollowListItem = ({who}) => {
         }
     };
     const handleUnFollow = async () => {
-        if (!profile.followers) {
-            console.error("profile.follower is null")
-            return; // Exit the function if followers array is undefined
+        if (typeof profile.following === 'undefined') {
+            console.error("profile.follower is undefined")
+            return; // Exit the function if following array is undefined
         }
-        const newFollowers = profile.followers.filter(followId => followId !== who._id);
+        const newFollowing = profile.following.filter(followId => followId !== who._id);
         // console.log("follower to unfollow ")
         // console.log(who)
-        // console.log(profile.followers)
-        const newProfile = { ...profile, followers: newFollowers};
+        // console.log(profile.following)
+        const newProfile = { ...profile, following: newFollowing};
         // console.log(newProfile)
         setProfile(newProfile);
         setFollowed(false);

@@ -13,7 +13,7 @@ function ProfileScreen() {
     const { currentUser } = useSelector((state) => state.user);
     const [profile, setProfile] = useState(currentUser);
     const [myTuits, setMyTuits] = useState([]);
-    const [myFollowers, setMyFollowers] = useState([]);
+    const [myFollowing, setMyFollowing] = useState([]);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -48,25 +48,25 @@ function ProfileScreen() {
                 console.error(error);
             }
         };
-        const fetchMyFollowers = async () => {
-            console.log("fetchMyFollowers====================")
+        const fetchMyFollowing = async () => {
+            console.log("fetchMyFollowing====================")
             try {
-                let followerIds = !profile.followers ? [] : profile.followers;
-                let followers = await Promise.all(followerIds.map(async followerId => {
-                    const follower = await whoService.findUserById(followerId)
-                    console.log(follower)
-                    return follower;
+                let followingIds = !profile.following ? [] : profile.following;
+                let following = await Promise.all(followingIds.map(async followingId => {
+                    const following = await whoService.findUserById(followingId)
+                    console.log(following)
+                    return following;
                 }))
-                console.log("myFollowers:")
-                console.log(followers)
-                setMyFollowers(followers);
+                console.log("myfollowing:")
+                console.log(following)
+                setMyFollowing(following);
             } catch (error) {
                 console.error(error);
             }
         };
         fetchProfile();
         fetchMyTuits();
-        fetchMyFollowers();
+        fetchMyFollowing();
     }, []);
 
     const handleLogout = async () => {
@@ -81,8 +81,8 @@ function ProfileScreen() {
             console.error(error);
         }
     };
-    console.log("--------- myFollowers -----------")
-    console.log(myFollowers)
+    console.log("--------- myFollowing -----------")
+    console.log(myFollowing)
     return (
         <div>
             <h1>Profile Screen</h1>
@@ -157,11 +157,11 @@ function ProfileScreen() {
             </button>
             <ul className="list-group mt-2">
                 <li className="list-group-item">
-                    <h4>Followers</h4>
-                    <div>{myFollowers.length ?? ""}</div>
+                    <h4>Following</h4>
+                    <div>{myFollowing.length ?? ""}</div>
                 </li>
                 {
-                    myFollowers.map((user) => (
+                    myFollowing.map((user) => (
                     <li className="list-group-item" key={user._id}>
                         {user.firstName} {user.lastName}
                     </li>

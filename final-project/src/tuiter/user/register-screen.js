@@ -89,6 +89,8 @@ function RegisterScreen() {
         options={options}
       /> */}
 
+      
+
             <button className="btn btn-primary mt-2"
                 onClick={handleRegister}>
                 Register

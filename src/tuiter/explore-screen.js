@@ -34,7 +34,7 @@ function ExploreScreen() {
             <div className="row">
                 <div className="col-12 position-relative">
                     <input
-                        placeholder="Search Tuiter"
+                        placeholder="Search"
                         className="form-control rounded-pill ps-5"
                         value={searchTerm}
                         onChange={(event) => setSearchTerm(event.target.value)}

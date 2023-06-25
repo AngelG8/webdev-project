@@ -3,36 +3,9 @@ import { updateTuitThunk } from "../services/tuits-thunks";
 import { useDispatch, useSelector } from "react-redux";
 import "./tuit-item.css";
 
-// const TuitSummaryList = () => {
-//     const { tuits } = useSelector(state => state.tuits)
-//     return (
-//         <ul className="list-group">
-//             {
-//                 tuits.map(tuit =>
-//                     <TuitSummaryItem
-//                         key={tuit._id} tuit={tuit} />)
-//             }
-//         </ul>
-//     );
-// };
-
 const TuitStats = (
     { tuit }
-    // {
-    //     tuit = {
-    //         "liked": false,
-    //         "disliked": false,
-    //         "replies": 0,
-    //         "retuits": 0,
-    //         "likes": 0,
-    //         "dislikes": 0,
-    //         "handle": "",
-    //         "tuit": ""
-    //     }
-    // }
-
 ) => {
-    // const { tuits } = useSelector(state => state.tuits)
     const dispatch = useDispatch();
     const heartIcon = tuit.liked ? "fas fa-heart liked" : "fas fa-heart";
     const thumbsDownIcon = tuit.disliked ? "fas fa-thumbs-down disliked" : "fas fa-thumbs-down";

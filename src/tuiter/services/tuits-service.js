@@ -1,6 +1,7 @@
 import axios from 'axios';
 const API_BASE = process.env.REACT_APP_API_BASE;
 const TUITS_API = `${API_BASE}/tuits`;
+const API_KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 
 export const createTuit = async (tuit) => {
     const response = await axios.post(TUITS_API, tuit)
@@ -24,9 +25,29 @@ export const updateTuit = async (tuit) => {
 }
 
 export const searchTuits = async (searchTerm) => {
-    console.log("searchTuits")
     const response = await axios.get(`${TUITS_API}/search?q=${searchTerm}`);
     const searchResults = response.data;
-    console.log(searchResults)
     return searchResults;
+};
+
+export const searchYouTubeVideos = async (searchTerm) => {
+    const API_URL = 'https://www.googleapis.com/youtube/v3/search';
+
+    try {
+        const response = await axios.get(API_URL, {
+            params: {
+                key: API_KEY,
+                part: "snippet",
+                q: searchTerm,
+                type: 'video',
+                maxResult: 10,
+            },
+        });
+
+        const searchResults = response.data.items;
+        return searchResults;
+    } catch (error) {
+        console.error('Error searching YouTube videos:', error);
+        throw error;
+    }
 };

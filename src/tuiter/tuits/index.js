@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TuitItem from "./tuit-item";
+import YoutubeItem from "./youtube-item";
 import { findTuitsThunk } from "../services/tuits-thunks";
 
 const TuitList = () => {
-    console.log("TUITLIST")
-    const { tuits, loading, searchResults } = useSelector((state) => state.tuits);
+    const { tuits, loading, searchResults, youtubeSearchResults } = useSelector((state) => state.tuits);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -19,6 +19,9 @@ const TuitList = () => {
             {loading && <li className="list-group-item">Loading...</li>}
             {displayedTuits.map((tuit) => (
                 <TuitItem key={tuit._id} tuit={tuit} />
+            ))}
+            {youtubeSearchResults.map((youtube) => (
+                <YoutubeItem key={youtube.etag} youtube={youtube} />
             ))}
         </ul>
     );

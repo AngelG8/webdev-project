@@ -6,7 +6,8 @@ import { templateTuit } from "../templates/template-tuit";
 const initialState = {
     tuits: [],
     loading: false,
-    searchResults: []
+    searchResults: [],
+    youtubeSearchResults: []
 }
 
 const tuitsSlice = createSlice({
@@ -47,9 +48,9 @@ const tuitsSlice = createSlice({
             },
         [searchTuitsThunk.fulfilled]:
             (state, { payload }) => {
-                console.log(payload)
-                state.searchResults = payload
-            }
+                state.searchResults = payload.tuits
+                state.youtubeSearchResults = payload.youtube
+            },
     },
     reducers: {}
 });

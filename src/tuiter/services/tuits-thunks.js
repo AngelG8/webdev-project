@@ -30,12 +30,14 @@ export const updateTuitThunk =
 export const searchTuitsThunk = createAsyncThunk(
     "tuits/searchTuits",
     async (searchTerm) => {
-        const searchResults = await service.searchTuits(searchTerm);
-        return searchResults;
-    },
-    {
-        fulfilled: (state, action) => {
-            state.searchResults = action.payload;
-        },
+        const tuitsSearchResults = await service.searchTuits(searchTerm);
+        const youtubeSearchResults = await service.searchYouTubeVideos(searchTerm);
+
+        const combinedResults = {
+            tuits: tuitsSearchResults,
+            youtube: youtubeSearchResults,
+        };
+
+        return combinedResults;
     }
 );

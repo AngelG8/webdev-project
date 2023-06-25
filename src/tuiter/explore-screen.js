@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
-import TuitSummaryList from "./tuit-summary-list";
 import { AiOutlineSearch } from "react-icons/ai";
-import { GoGear } from "react-icons/go";
 import { useDispatch, useSelector } from "react-redux";
 import TuitList from "./tuits";
 import { searchTuitsThunk } from "./services/tuits-thunks";
 import "./index.css";
 
 function ExploreScreen() {
-    console.log("EXPLORE")
     const initialSearchResults = useSelector((state) => state.tuits.searchResults);
     const [searchResults, setSearchResults] = useState(initialSearchResults);
     const [searchTerm, setSearchTerm] = useState("");
@@ -35,9 +32,9 @@ function ExploreScreen() {
     return (
         <>
             <div className="row">
-                <div className="col-11 position-relative">
+                <div className="col-12 position-relative">
                     <input
-                        placeholder="Search Tuiter"
+                        placeholder="Search"
                         className="form-control rounded-pill ps-5"
                         value={searchTerm}
                         onChange={(event) => setSearchTerm(event.target.value)}
@@ -47,10 +44,6 @@ function ExploreScreen() {
                         className="fs-3 position-absolute wd-nudge-up"
                         onClick={handleSearch}
                     />
-                </div>
-                <div className="col-1">
-                    <GoGear className="wd-top-4 float-end
-                       fs-3 position-relative"/>
                 </div>
             </div>
             <ul className="nav nav-pills mb-2 mt-2">
@@ -70,7 +63,6 @@ function ExploreScreen() {
                     Blahaj Goes To Space!</h1>
             </div>
             <TuitList tuits={searchResults} />
-
         </>
     );
 };

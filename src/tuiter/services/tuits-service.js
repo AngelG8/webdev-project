@@ -22,3 +22,11 @@ export const updateTuit = async (tuit) => {
     const response = await axios.put(`${TUITS_API}/${tuit._id}`, tuit);
     return tuit;
 }
+
+export const searchTuits = async (searchTerm) => {
+    console.log("searchTuits")
+    const response = await axios.get(`${TUITS_API}/search?q=${searchTerm}`);
+    const searchResults = response.data;
+    console.log(searchResults)
+    return searchResults;
+};

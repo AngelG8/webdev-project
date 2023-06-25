@@ -26,3 +26,16 @@ export const updateTuitThunk =
         async (tuit) =>
             await service.updateTuit(tuit)
     )
+
+export const searchTuitsThunk = createAsyncThunk(
+    "tuits/searchTuits",
+    async (searchTerm) => {
+        const searchResults = await service.searchTuits(searchTerm);
+        return searchResults;
+    },
+    {
+        fulfilled: (state, action) => {
+            state.searchResults = action.payload;
+        },
+    }
+);

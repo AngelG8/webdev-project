@@ -1,35 +1,35 @@
 import { createSlice } from "@reduxjs/toolkit";
 import whoArray from "./who.json";
 import {
-  findWhoThunk,
+  findWhoToFollowListThunk,
 } from "../services/who-thunks";
 
 const initialState = {
-    who: [],
+    whoToFollowList: [],
     loading: false
 }
 
-const whoSlice = createSlice({
-    name: 'who',
+const whoToFollowListSlice = createSlice({
+    name: 'whoToFollowList',
     initialState,
     extraReducers: {
-        [findWhoThunk.pending]:
+        [findWhoToFollowListThunk.pending]:
             (state) => {
                 state.loading = true
-                state.who = []
+                state.whoToFollowList = []
             },
-        [findWhoThunk.fulfilled]:
+        [findWhoToFollowListThunk.fulfilled]:
             (state, { payload }) => {
                 state.loading = false
-                state.who = payload
+                state.whoToFollowList = payload
             },
-        [findWhoThunk.rejected]:
+        [findWhoToFollowListThunk.rejected]:
             (state, action) => {
                 state.loading = false
-                state.who = action.error
+                state.whoToFollowList = action.error
             }
     },
     reducers: {}
 });
 
-export default whoSlice.reducer;
+export default whoToFollowListSlice.reducer;

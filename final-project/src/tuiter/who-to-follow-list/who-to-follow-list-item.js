@@ -3,29 +3,29 @@ import {updateUserThunk} from "../services/auth-thunks";
 import { useSelector, useDispatch } from "react-redux";
 
 
-const WhoToFollowListItem = ({who}) => {
+const WhoToFollowListItem = ({whoToFollow}) => {
     const { currentUser} = useSelector((state) => state.user);
     const [profile, setProfile] = useState(currentUser);
     const [followed, setFollowed] = useState(false);
 
-    console.log("------ who currentUser ")
+    console.log("------ whoToFollow currentUser ")
     console.log(profile)
 
     const dispatch = useDispatch();
     useEffect(() => {
-        if (currentUser && currentUser.following && currentUser.following.includes(who._id)) {
+        if (currentUser && currentUser.following && currentUser.following.includes(whoToFollow._id)) {
             setFollowed(true);
         }
-    }, [currentUser, currentUser?.following, who._id]);
+    }, [currentUser, currentUser?.following, whoToFollow._id]);
 
     const handleFollow = async () => {
         let newFollowings
         if (typeof profile.following === 'undefined') {
             console.error("profile.following is undefined")
             // return; // Exit the function if following array is undefined
-            newFollowings = [who._id]
+            newFollowings = [whoToFollow._id]
         } else {
-            newFollowings = [...profile.following, who._id]
+            newFollowings = [...profile.following, whoToFollow._id]
         }
         console.log("------ newFollowings------ ")
         console.log(newFollowings)
@@ -45,9 +45,9 @@ const WhoToFollowListItem = ({who}) => {
             console.error("profile.follower is undefined")
             return; // Exit the function if following array is undefined
         }
-        const newFollowing = profile.following.filter(followId => followId !== who._id);
+        const newFollowing = profile.following.filter(followId => followId !== whoToFollow._id);
         // console.log("follower to unfollow ")
-        // console.log(who)
+        // console.log(whoToFollow)
         // console.log(profile.following)
         const newProfile = { ...profile, following: newFollowing};
         // console.log(newProfile)
@@ -60,7 +60,7 @@ const WhoToFollowListItem = ({who}) => {
         }
     };
 
-    if (currentUser && who._id === currentUser._id) {
+    if (currentUser && whoToFollow._id === currentUser._id) {
             return null;
         }
 
@@ -69,10 +69,10 @@ const WhoToFollowListItem = ({who}) => {
         <li className="list-group-item">
             <div className="row">
                 <div className="col-2">
-                    <img className="rounded-circle" height={48} src={`/images/${who.avatarIcon}`} />
+                    <img className="rounded-circle" height={48} src={`/images/${whoToFollow.avatarIcon}`} />
                 </div>
                 <div className="col-8">
-                    <div className="fw-bold">{who.firstName} {who.lastName}</div>
+                    <div className="fw-bold">{whoToFollow.firstName} {whoToFollow.lastName}</div>
                 </div>
                 {!followed && <div className="col-2">
                     <button onClick={handleFollow}

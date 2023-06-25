@@ -16,7 +16,7 @@ import AuthContext from "./services/auth-context";
 
 const store = configureStore({
     reducer: {
-        who: whoReducer,
+        whoToFollowList: whoReducer,
         tuits: tuitsReducer,
         user: authReducer
     }

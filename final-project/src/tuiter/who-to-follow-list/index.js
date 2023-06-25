@@ -1,15 +1,15 @@
 import React, {useEffect} from "react";
 import WhoToFollowListItem from "./who-to-follow-list-item";
 import {useDispatch, useSelector} from "react-redux";
-import {findWhoThunk} from "../services/who-thunks";
+import {findWhoToFollowListThunk} from "../services/who-thunks";
 
 const WhoToFollowList = () => {
-  const { who, loading } = useSelector(state => state.who);
+  const { whoToFollowList, loading } = useSelector(state => state.whoToFollowList);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(findWhoThunk())
+    dispatch(findWhoToFollowListThunk())
   }, [])
-  console.log(who)
+  console.log(whoToFollowList)
   // var loading = true
   // var whoArray = []
   return (
@@ -23,10 +23,10 @@ const WhoToFollowList = () => {
                 </li>
             }
             {
-                who.map(who =>
+              whoToFollowList.map(whoToFollow =>
                     <WhoToFollowListItem
-                        key={who._id}
-                        who={who} />
+                        key={whoToFollow._id}
+                        whoToFollow={whoToFollow} />
                 )
             }
         </ul>

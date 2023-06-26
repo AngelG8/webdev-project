@@ -42,7 +42,7 @@ function Tuiter() {
                                 <Route path="/profile/:profileId" element={<OtherProfileScreen />} />
                                 <Route path="/login" element={<LoginScreen />} />
                                 <Route path="/register" element={<RegisterScreen />} />
-                                <Route path="/details" element={<DetailsScreen />} />
+                                <Route path="/details/:id" element={<DetailsScreen />} />
                             </Routes>
                         </div>
                         <div class="col-4 d-none d-lg-block">

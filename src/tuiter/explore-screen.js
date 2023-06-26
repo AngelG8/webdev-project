@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import TuitList from "./tuits";
+import TuitSearch from "./tuits/tuit-search";
 import { searchTuitsThunk } from "./services/tuits-thunks";
 import "./index.css";
 
@@ -62,7 +63,7 @@ function ExploreScreen() {
                 <h1 className="position-absolute wd-nudge-up text-white">
                     Blahaj Goes To Space!</h1>
             </div>
-            <TuitList tuits={searchResults} />
+            <TuitSearch tuits={searchResults} />
         </>
     );
 };

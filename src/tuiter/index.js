@@ -9,6 +9,7 @@ import tuitsReducer from "./reducers/tuits-reducer";
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from "react-redux";
 import ProfileScreen from "./user/profile-screen";
+import OtherProfileScreen from "./user/other-profile-screen";
 import LoginScreen from "./user/login-screen";
 import RegisterScreen from "./user/register-screen";
 import authReducer from "./reducers/auth-reducer";
@@ -17,7 +18,7 @@ import DetailsScreen from "./details/details-screen";
 
 const store = configureStore({
     reducer: {
-        who: whoReducer,
+        whoToFollowList: whoReducer,
         tuits: tuitsReducer,
         user: authReducer
     }
@@ -38,6 +39,7 @@ function Tuiter() {
                                 <Route path="/search" element={<ExploreScreen />} />
                                 <Route path="/bookmarks" element={<BookmarksScreen />} />
                                 <Route path="/profile" element={<ProfileScreen />} />
+                                <Route path="/profile/:profileId" element={<OtherProfileScreen />} />
                                 <Route path="/login" element={<LoginScreen />} />
                                 <Route path="/register" element={<RegisterScreen />} />
                                 <Route path="/details" element={<DetailsScreen />} />

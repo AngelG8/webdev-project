@@ -12,13 +12,16 @@ const TuitList = () => {
         dispatch(findTuitsThunk());
     }, []);
 
-    let displayedTuits = tuits;
+    let displayedTuits = searchResults.length > 0 ? searchResults : tuits;
 
     return (
         <ul className="list-group">
             {loading && <li className="list-group-item">Loading...</li>}
             {displayedTuits.map((tuit) => (
                 <TuitItem key={tuit._id} tuit={tuit} />
+            ))}
+            {youtubeSearchResults.map((youtube) => (
+                <YoutubeItem key={youtube.etag} youtube={youtube} />
             ))}
         </ul>
     );

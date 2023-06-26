@@ -12,7 +12,6 @@ function RegisterScreen() {
     const [avatar, setAvatar] = useState("");
     const [role, setRole] = useState("");
 
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const handleRegister = async () => {
@@ -36,7 +35,6 @@ function RegisterScreen() {
                 <input className="form-control" type="password" value={password}
                     onChange={(event) => setPassword(event.target.value)} />
             </div>
-
             <div className="mt-2">
                 <label>FirstName</label>
                 <input className="form-control" type="text" value={firstName}
@@ -83,8 +81,6 @@ function RegisterScreen() {
                     </option>
                 </select>
             </div> 
-
-
             <button className="btn btn-primary mt-2"
                 onClick={handleRegister}>
                 Register

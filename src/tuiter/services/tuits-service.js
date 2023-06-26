@@ -29,7 +29,6 @@ export const updateTuit = async (tuit) => {
 
 export const findMyTuits = async () => {
     const response = await api.get(`${API_BASE}/myTuits`);
-    // console.log("findMytuits" + response.data)
     return response.data;
 }
 
@@ -39,7 +38,7 @@ export const findOtherTuits = async (uid) => {
 }
 
 export const searchTuits = async (searchTerm) => {
-    const response = await api.get(`${TUITS_API}/search?q=${searchTerm}`);
+    const response = await api.get(`${API_BASE}/search?q=${searchTerm}`);
     const searchResults = response.data;
     return searchResults;
 };
@@ -48,7 +47,7 @@ export const searchYouTubeVideos = async (searchTerm) => {
     const API_URL = 'https://www.googleapis.com/youtube/v3/search';
 
     try {
-        const response = await api.get(API_URL, {
+        const response = await axios.get(API_URL, {
             params: {
                 key: API_KEY,
                 part: "snippet",

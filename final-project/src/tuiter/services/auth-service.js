@@ -31,6 +31,13 @@ export const updateUser = async (user) => {
     return response.data;
 };
 
+export const updateUserById = async (user) => {
+    console.log("--------- updateUserById")
+    console.log(user)
+    const response = await api.put(`http://localhost:4000/api/otheruser`, user);
+    return response.data;
+};
+
 export const register = async ({ username, password }) => {
     const response = await api.post(`${USERS_URL}/register`, { username, password });
     const user = response.data;

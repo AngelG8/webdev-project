@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
-import {updateUserThunk} from "../services/auth-thunks";
+import {updateUserThunk, updateUserByIdThunk} from "../services/auth-thunks";
 import { useSelector, useDispatch } from "react-redux";
+import * as authService from "../services/auth-service";
 
 
 const WhoToFollowListItem = ({whoToFollow}) => {
@@ -10,32 +11,67 @@ const WhoToFollowListItem = ({whoToFollow}) => {
 
     console.log("------ whoToFollow currentUser ")
     console.log(profile)
+    console.log("------ whoToFollow whoToFollow ")
+    console.log(whoToFollow)
 
     const dispatch = useDispatch();
     useEffect(() => {
         if (currentUser && currentUser.following && currentUser.following.includes(whoToFollow._id)) {
             setFollowed(true);
         }
-    }, [currentUser, currentUser?.following, whoToFollow._id]);
+    }, []);
 
-    const handleFollow = async () => {
-        let newFollowings
-        if (typeof profile.following === 'undefined') {
-            console.error("profile.following is undefined")
+    const addToFollowers = (userId, profileToEdit) => {
+        let newFollowers;
+        if (typeof profileToEdit.follwers === 'undefined') {
+            console.error("profileToEdit.follwers is undefined")
             // return; // Exit the function if following array is undefined
-            newFollowings = [whoToFollow._id]
+            newFollowers = [userId]
         } else {
-            newFollowings = [...profile.following, whoToFollow._id]
+            newFollowers = [...profileToEdit.followers, userId]
+        }
+        console.log("------ newFollowers------ ")
+        console.log(newFollowers)
+        return { ...profileToEdit, followers: newFollowers};
+    }
+
+    const addToFollowing = (userId, profileToEdit) => {
+        let newFollowings;
+        if (typeof profileToEdit.following === 'undefined') {
+            console.error("profileToEdit.following is undefined")
+            // return; // Exit the function if following array is undefined
+            newFollowings = [userId];
+        } else {
+            newFollowings = [...profileToEdit.following, userId];
         }
         console.log("------ newFollowings------ ")
         console.log(newFollowings)
-        const newProfile = { ...profile, following: newFollowings};
+        return { ...profileToEdit, following: newFollowings};
+    }
+
+    const handleFollow = async () => {
+        const newProfile = addToFollowing(whoToFollow._id, profile)
         setProfile(newProfile);
         setFollowed(true);
         console.log("------ handleFollow newProfile ")
         console.log(newProfile)
         try {
             await dispatch(updateUserThunk(newProfile));
+        } catch (error) {
+            console.error(error);
+        }
+
+        // Modify follwers for the user being followed
+        const newWhoProfile = addToFollowers(currentUser._id, whoToFollow)
+        // setProfile(newProfile);
+        // setFollowed(true);
+        console.log("------ handleFollow newWhoProfile ")
+        console.log(newWhoProfile)
+        try {
+            console.log("------ whoToFollow._id  ")
+            console.log(whoToFollow._id)
+            // await updateUserByIdThunk({ user: newWhoProfile, uid: whoToFollow._id });
+            await authService.updateUserById(newWhoProfile);
         } catch (error) {
             console.error(error);
         }
@@ -61,9 +97,8 @@ const WhoToFollowListItem = ({whoToFollow}) => {
     };
 
     if (currentUser && whoToFollow._id === currentUser._id) {
-            return null;
-        }
-
+        return null;
+    }
 
     return (
         <li className="list-group-item">

@@ -81,8 +81,8 @@ function ProfileScreen() {
             console.error(error);
         }
     };
-    console.log("--------- myFollowing -----------")
-    console.log(myFollowing)
+    // console.log("--------- myFollowing -----------")
+    // console.log(myFollowing)
     return (
         <div>
             <h1>Profile Screen</h1>

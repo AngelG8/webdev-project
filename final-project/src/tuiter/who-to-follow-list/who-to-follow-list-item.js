@@ -19,7 +19,7 @@ const WhoToFollowListItem = ({whoToFollow}) => {
         if (currentUser && currentUser.following && currentUser.following.includes(whoToFollow._id)) {
             setFollowed(true);
         }
-    }, []);
+    }, [whoToFollow._id]);
 
     const addToFollowers = (userId, profileToEdit) => {
         let newFollowers;
@@ -104,25 +104,6 @@ const WhoToFollowListItem = ({whoToFollow}) => {
             console.error(error);
         }
     };
-    // const handleUnFollow = async () => {
-    //     if (typeof profile.following === 'undefined') {
-    //         console.error("profile.follower is undefined")
-    //         return; // Exit the function if following array is undefined
-    //     }
-    //     const newFollowing = profile.following.filter(followId => followId !== whoToFollow._id);
-    //     // console.log("follower to unfollow ")
-    //     // console.log(whoToFollow)
-    //     // console.log(profile.following)
-    //     const newProfile = { ...profile, following: newFollowing};
-    //     // console.log(newProfile)
-    //     setProfile(newProfile);
-    //     setFollowed(false);
-    //     try {
-    //         await dispatch(updateUserThunk(newProfile));
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // };
 
     const handleUnFollow = async () => {
         const newProfile = removeFollowing(whoToFollow._id, profile)

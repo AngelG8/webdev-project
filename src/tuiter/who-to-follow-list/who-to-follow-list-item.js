@@ -9,11 +9,6 @@ const WhoToFollowListItem = ({whoToFollow}) => {
     const [profile, setProfile] = useState(currentUser);
     const [followed, setFollowed] = useState(false);
 
-    console.log("------ whoToFollow currentUser ")
-    console.log(profile)
-    console.log("------ whoToFollow whoToFollow ")
-    console.log(whoToFollow)
-
     const dispatch = useDispatch();
     useEffect(() => {
         if (currentUser && currentUser.following && currentUser.following.includes(whoToFollow._id)) {
@@ -25,13 +20,10 @@ const WhoToFollowListItem = ({whoToFollow}) => {
         let newFollowers;
         if (typeof profileToEdit.follwers === 'undefined') {
             console.error("profileToEdit.follwers is undefined")
-            // return; // Exit the function if following array is undefined
             newFollowers = [userId]
         } else {
             newFollowers = [...profileToEdit.followers, userId]
         }
-        console.log("------ newFollowers------ ")
-        console.log(newFollowers)
         return { ...profileToEdit, followers: newFollowers};
     }
 
@@ -39,13 +31,10 @@ const WhoToFollowListItem = ({whoToFollow}) => {
         let newFollowers;
         if (typeof profileToEdit.follwers === 'undefined') {
             console.error("profileToEdit.follwers is undefined")
-            // return; // Exit the function if following array is undefined
             newFollowers = []
         } else {
             newFollowers = profileToEdit.followers.filter(item => item !== userId);
         }
-        console.log("------ newFollowers------ ")
-        console.log(newFollowers)
         return { ...profileToEdit, followers: newFollowers};
     }
 
@@ -53,13 +42,10 @@ const WhoToFollowListItem = ({whoToFollow}) => {
         let newFollowings;
         if (typeof profileToEdit.following === 'undefined') {
             console.error("profileToEdit.following is undefined")
-            // return; // Exit the function if following array is undefined
             newFollowings = [userId];
         } else {
             newFollowings = [...profileToEdit.following, userId];
         }
-        console.log("------ newFollowings------ ")
-        console.log(newFollowings)
         return { ...profileToEdit, following: newFollowings};
     }
 
@@ -67,13 +53,10 @@ const WhoToFollowListItem = ({whoToFollow}) => {
         let newFollowings;
         if (typeof profileToEdit.following === 'undefined') {
             console.error("profileToEdit.following is undefined")
-            // return; // Exit the function if following array is undefined
             newFollowings = []
         } else {
             newFollowings = profileToEdit.following.filter(item => item !== userId);
         }
-        console.log("------ newFollowings------ ")
-        console.log(newFollowings)
         return { ...profileToEdit, following: newFollowings};
     }
 
@@ -81,8 +64,6 @@ const WhoToFollowListItem = ({whoToFollow}) => {
         const newProfile = addToFollowing(whoToFollow._id, profile)
         setProfile(newProfile);
         setFollowed(true);
-        console.log("------ handleFollow newProfile ")
-        console.log(newProfile)
         try {
             await dispatch(updateUserThunk(newProfile));
         } catch (error) {
@@ -91,14 +72,7 @@ const WhoToFollowListItem = ({whoToFollow}) => {
 
         // Modify follwers for the user being followed
         const newWhoProfile = addToFollowers(currentUser._id, whoToFollow)
-        // setProfile(newProfile);
-        // setFollowed(true);
-        console.log("------ handleFollow newWhoProfile ")
-        console.log(newWhoProfile)
         try {
-            console.log("------ whoToFollow._id  ")
-            console.log(whoToFollow._id)
-            // await updateUserByIdThunk({ user: newWhoProfile, uid: whoToFollow._id });
             await authService.updateUserById(newWhoProfile);
         } catch (error) {
             console.error(error);
@@ -109,8 +83,6 @@ const WhoToFollowListItem = ({whoToFollow}) => {
         const newProfile = removeFollowing(whoToFollow._id, profile)
         setProfile(newProfile);
         setFollowed(false);
-        console.log("------ handleUnFollow newProfile ")
-        console.log(newProfile)
         try {
             await dispatch(updateUserThunk(newProfile));
         } catch (error) {
@@ -119,14 +91,7 @@ const WhoToFollowListItem = ({whoToFollow}) => {
 
         // Modify follwers for the user being followed
         const newWhoProfile = removeFollowers(currentUser._id, whoToFollow)
-        // setProfile(newProfile);
-        // setFollowed(true);
-        console.log("------ handleFollow newWhoProfile ")
-        console.log(newWhoProfile)
         try {
-            console.log("------ whoToFollow._id  ")
-            console.log(whoToFollow._id)
-            // await updateUserByIdThunk({ user: newWhoProfile, uid: whoToFollow._id });
             await authService.updateUserById(newWhoProfile);
         } catch (error) {
             console.error(error);

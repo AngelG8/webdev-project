@@ -26,9 +26,18 @@ export const updateTuitThunk =
         async (tuit) =>
             await service.updateTuit(tuit)
     )
-// export const findMyTuitsThunk =
-//     createAsyncThunk(
-//         'tuits/findMyTuits',
-//         async () =>
-//             await service.findMyTuits()
-//     )
+
+export const searchTuitsThunk = createAsyncThunk(
+    "tuits/searchTuits",
+    async (searchTerm) => {
+        const tuitsSearchResults = await service.searchTuits(searchTerm);
+        const youtubeSearchResults = await service.searchYouTubeVideos(searchTerm);
+
+        const combinedResults = {
+            tuits: tuitsSearchResults,
+            youtube: youtubeSearchResults,
+        };
+
+        return combinedResults;
+    }
+);

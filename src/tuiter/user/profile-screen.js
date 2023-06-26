@@ -1,11 +1,7 @@
-import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router";
-import {
-    logoutThunk,
-    profileThunk,
-    updateUserThunk
-} from "../services/auth-thunks";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { profileThunk, logoutThunk, updateUserThunk } from "../services/auth-thunks";
 import * as tuitsService from "../services/tuits-service";
 import * as whoService from "../services/who-service";
 import {Link} from "react-router-dom";
@@ -16,7 +12,6 @@ function ProfileScreen() {
     const [myTuits, setMyTuits] = useState([]);
     const [myFollowing, setMyFollowing] = useState([]);
     const [myFollowers, setMyFollowers] = useState([]);
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -30,7 +25,6 @@ function ProfileScreen() {
 
     useEffect(() => {
         const fetchProfile = async () => {
-            console.log("fetchProfile-----------------")
             try {
                 const { payload } = await dispatch(profileThunk());
                 console.log(payload)
@@ -41,33 +35,26 @@ function ProfileScreen() {
             }
         };
         const fetchMyTuits = async () => {
-            // console.log("fetchMyTuits====================")
             try {
                 const tuits = await tuitsService.findMyTuits();
-                // console.log("profile myTuit:" + tuits)
                 setMyTuits(tuits);
             } catch (error) {
                 console.error(error);
             }
         };
         const fetchMyFollowing = async () => {
-            console.log("fetchMyFollowing====================")
             try {
                 let followingIds = !profile.following ? [] : profile.following;
                 let following = await Promise.all(followingIds.map(async followingId => {
                     const following = await whoService.findUserById(followingId)
-                    console.log(following)
                     return following;
                 }))
-                console.log("myfollowing:")
-                console.log(following)
                 setMyFollowing(following);
             } catch (error) {
                 console.error(error);
             }
         };
         const fetchMyFollowers = async () => {
-            console.log("fetchMyFollowers====================")
             try {
                 let followerIds = !profile.followers ? [] : profile.followers;
                 let follower = await Promise.all(followerIds.map(async followerId => {
@@ -75,8 +62,6 @@ function ProfileScreen() {
                     console.log(follower)
                     return follower;
                 }))
-                console.log("myfollowers:")
-                console.log(follower)
                 setMyFollowers(follower);
             } catch (error) {
                 console.error(error);
@@ -89,7 +74,6 @@ function ProfileScreen() {
     }, []);
 
     const handleLogout = async () => {
-
         await dispatch(logoutThunk());
         navigate("../login");
     };
@@ -100,8 +84,6 @@ function ProfileScreen() {
             console.error(error);
         }
     };
-    // console.log("--------- myFollowing -----------")
-    // console.log(myFollowing)
     return (
         <div>
             <h1>Profile Screen</h1>

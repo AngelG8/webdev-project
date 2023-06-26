@@ -30,8 +30,6 @@ export const updateUserThunk = createAsyncThunk(
 
 export const updateUserByIdThunk = createAsyncThunk(
     "user/updateUserById", async ({user, uid}) => {
-      console.log("-------------updateUserByIdThunk --------------")
-      console.log(uid)
       await authService.updateUserById({user, uid});
       return user;
     }

@@ -1,13 +1,11 @@
 import axios from "axios";
-// const SERVER_API_URL = 'https://webdev-server-project.onrender.com/api';
-// const USERS_URL = `${SERVER_API_URL}/users`;
-const USERS_URL = 'http://localhost:4000/api/user';
+const SERVER_API_URL = process.env.REACT_APP_API_BASE;
+const USERS_URL = `${SERVER_API_URL}/user`;
 
 const api = axios.create({ withCredentials: true });
 
 export const login = async ({ username, password }) => {
     const response = await api.post(`${USERS_URL}/login`, { username, password });
-    // console.log("login response: " + response.request)
     const user = response.data;
     return user;
 };
@@ -19,27 +17,21 @@ export const logout = async () => {
 
 export const profile = async () => {
     const response = await api.get(`${USERS_URL}/profile`);
-    // console.log("---------- get response")
-    // console.log(response.data)
     return response.data;
 };
 
 export const updateUser = async (user) => {
-    // console.log("--------- updateUser")
-    // console.log(user)
     const response = await api.put(`${USERS_URL}`, user);
     return response.data;
 };
 
 export const updateUserById = async (user) => {
-    console.log("--------- updateUserById")
-    console.log(user)
-    const response = await api.put(`http://localhost:4000/api/otheruser`, user);
+    const response = await api.put(`${SERVER_API_URL}/otheruser`, user);
     return response.data;
 };
 
-export const register = async ({ username, password }) => {
-    const response = await api.post(`${USERS_URL}/register`, { username, password });
+export const register = async ({ username, password, firstName, lastName, role, email , phone, avatar }) => {
+    const response = await api.post(`${USERS_URL}/register`, { username, password , firstName, lastName, role, email , phone, avatar});
     const user = response.data;
     return user;
 }

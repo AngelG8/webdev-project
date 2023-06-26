@@ -12,7 +12,6 @@ import { templateTuit } from "./templates/template-tuit"
 
 const WhatsHappening = () => {
     const { currentUser } = useSelector((state) => state.user);
-    // console.log(currentUser)
     let [whatsHappening, setWhatsHappening] = useState('');
     const dispatch = useDispatch();
     const tuitClickHandler = () => {
@@ -23,7 +22,6 @@ const WhatsHappening = () => {
         }
         dispatch(createTuitThunk(newTuit));
         setWhatsHappening("");
-        // console.log(whatsHappening);
     }
     return (
         <div className="row">

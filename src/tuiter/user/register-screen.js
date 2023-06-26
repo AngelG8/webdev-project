@@ -9,6 +9,7 @@ function RegisterScreen() {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
+    const [avatar, setAvatar] = useState("");
     const [role, setRole] = useState("");
 
 
@@ -16,7 +17,7 @@ function RegisterScreen() {
     const dispatch = useDispatch();
     const handleRegister = async () => {
         try {
-            await dispatch(registerThunk({ username, password, firstName, lastName, role, email , phone}));
+            await dispatch(registerThunk({ username, password, firstName, lastName, role, email , phone, avatar }));
             navigate("../profile");
         } catch (e) {
             alert(e);
@@ -61,11 +62,11 @@ function RegisterScreen() {
                     onChange={(event) => setPhone(event.target.value)} />
             </div>
 
-            {/* <div className="mt-2">
-                <label>ROLE</label>
-                <input className="form-control" type="text" value={role}
-                    onChange={(event) => setRole(event.target.value)} />
-            </div> */}
+            <div className="mt-2">
+                <label>Avatar</label>
+                <input className="form-control" type="text" value={avatar}
+                    onChange={(event) => setAvatar(event.target.value)} />
+            </div>
 
 
              <div className="mt-2">

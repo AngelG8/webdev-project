@@ -105,17 +105,15 @@ const WhoToFollowListItem = ({whoToFollow}) => {
     return (
         <li className="list-group-item">
             <div className="row">
-                <div className="col-2">
-                    <img className="rounded-circle" height={48} src={`/images/${whoToFollow.avatarIcon}`} />
+                <div className="col-9">
+                    <Link className="nav-link" to={"/tuiter/profile/"+whoToFollow._id}
+                          style={{ textDecoration: 'underline'}}>
+                        <i className="fa-solid fa-heart"></i>   {whoToFollow.firstName} {whoToFollow.lastName}</Link>
+
                 </div>
-                <div className="col-8">
-                    <nav className="nav nav-tabs mb-2">
-                    <Link className="nav-link" to={"/tuiter/profile/"+whoToFollow._id}>{whoToFollow.firstName} {whoToFollow.lastName}</Link>
-                    </nav>
-                </div>
-                {!followed && <div className="col-2">
+                {!followed && <div className="col-3">
                     <button onClick={handleFollow}
-                            className="btn btn-primary rounded-pill float-end">Follow
+                            className="btn btn-primary rounded-pill float-end" disabled={!currentUser}>Follow
                     </button>
                 </div>
                 }

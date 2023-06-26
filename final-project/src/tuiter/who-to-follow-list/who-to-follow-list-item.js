@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {updateUserThunk, updateUserByIdThunk} from "../services/auth-thunks";
 import { useSelector, useDispatch } from "react-redux";
 import * as authService from "../services/auth-service";
-
+import {Link} from "react-router-dom";
 
 const WhoToFollowListItem = ({whoToFollow}) => {
     const { currentUser} = useSelector((state) => state.user);
@@ -144,7 +144,9 @@ const WhoToFollowListItem = ({whoToFollow}) => {
                     <img className="rounded-circle" height={48} src={`/images/${whoToFollow.avatarIcon}`} />
                 </div>
                 <div className="col-8">
-                    <div className="fw-bold">{whoToFollow.firstName} {whoToFollow.lastName}</div>
+                    <nav className="nav nav-tabs mb-2">
+                    <Link className="nav-link" to={"/tuiter/profile/"+whoToFollow._id}>{whoToFollow.firstName} {whoToFollow.lastName}</Link>
+                    </nav>
                 </div>
                 {!followed && <div className="col-2">
                     <button onClick={handleFollow}

@@ -30,3 +30,9 @@ export const findMyTuits = async () => {
     // console.log("findMytuits" + response.data)
     return response.data;
 }
+
+export const findOtherTuits = async (uid) => {
+    const response = await api.get(`${API_BASE}/myTuits/${uid}`);
+    // console.log("findMytuits" + response.data)
+    return response.data;
+}

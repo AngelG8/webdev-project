@@ -8,6 +8,7 @@ import {
 } from "../services/auth-thunks";
 import * as tuitsService from "../services/tuits-service";
 import * as whoService from "../services/who-service";
+import {Link} from "react-router-dom";
 
 function ProfileScreen() {
     const { currentUser } = useSelector((state) => state.user);
@@ -178,12 +179,14 @@ function ProfileScreen() {
                     <h4>Following</h4>
                     <div>{myFollowing.length ?? ""}</div>
                 </li>
+                <nav className="nav nav-tabs mb-2">
                 {
                     myFollowing.map((user) => (
                     <li className="list-group-item" key={user._id}>
-                        {user.firstName} {user.lastName}
+                        <Link className="nav-link" to={"/tuiter/profile/"+user._id}>{user.firstName} {user.lastName}</Link>
                     </li>
                 ))}
+                </nav>
             </ul>
 
             <ul className="list-group mt-2">
@@ -191,12 +194,14 @@ function ProfileScreen() {
                     <h4>Followers</h4>
                     <div>{myFollowers.length ?? ""}</div>
                 </li>
+                <nav className="nav nav-tabs mb-2">
                 {
                     myFollowers.map((user) => (
                         <li className="list-group-item" key={user._id}>
-                            {user.firstName} {user.lastName}
+                            <Link className="nav-link" to={"/tuiter/profile/"+user._id}>{user.firstName} {user.lastName}</Link>
                         </li>
                     ))}
+                </nav>
             </ul>
 
             {/*<pre>{JSON.stringify(myTuits, null, 2)}</pre>*/}

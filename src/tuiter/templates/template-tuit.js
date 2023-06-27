@@ -7,7 +7,7 @@ const currentUser = {
 export const templateTuit = {
     ...currentUser,
     "topic": "Generic",
-    "time": "0m",
+    "time": "2m",
     "liked": false,
     "disliked": false,
     "replies": 0,

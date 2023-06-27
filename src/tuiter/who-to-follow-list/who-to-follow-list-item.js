@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import {updateUserThunk, updateUserByIdThunk} from "../services/auth-thunks";
+import React from "react";
+import {updateUserThunk} from "../services/auth-thunks";
 import { useSelector, useDispatch } from "react-redux";
 import * as authService from "../services/auth-service";
 import {Link} from "react-router-dom";
@@ -66,11 +66,13 @@ const WhoToFollowListItem = ({whoToFollow}) => {
     }
 
     const handleFollow = async () => {
+
         const newProfile = addToFollowing(whoToFollow._id, myProfile)
+
         // setProfile(newProfile);
         // setFollowed(true);
-        // myProfile = newProfile;
-        // isFollowed = true;
+        myProfile = newProfile;
+        isFollowed = true;
         try {
             await dispatch(updateUserThunk(newProfile));
         } catch (error) {
@@ -89,9 +91,9 @@ const WhoToFollowListItem = ({whoToFollow}) => {
     const handleUnFollow = async () => {
         const newProfile = removeFollowing(whoToFollow._id, myProfile)
         // setProfile(newProfile);
-        // myProfile = newProfile;
         // setFollowed(false);
-        // isFollowed = false;
+        myProfile = newProfile;
+        isFollowed = false;
         try {
             await dispatch(updateUserThunk(newProfile));
         } catch (error) {

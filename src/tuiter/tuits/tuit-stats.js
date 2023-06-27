@@ -1,5 +1,6 @@
 import React from "react"
 import { updateTuitThunk } from "../services/tuits-thunks";
+import {updateUserThunk} from "../services/auth-thunks";
 import { useDispatch, useSelector } from "react-redux";
 import "./tuit-item.css";
 import { useNavigate } from "react-router";
@@ -7,17 +8,18 @@ import { useNavigate } from "react-router";
 const TuitStats = (
     { tuit }
 ) => {
+  const { currentUser } = useSelector((state) => state.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const heartIcon = tuit.liked ? "fas fa-heart liked" : "fas fa-heart";
     const thumbsDownIcon = tuit.disliked ? "fas fa-thumbs-down disliked" : "fas fa-thumbs-down";
 
-       const handleprofileBear = async (id) => {
-    try {
-        navigate(`/tuiter/details/${id}`);
-    } catch (error) {
-        console.error(error);
-    }
+      const handleprofileBear = async (id) => {
+      try {
+          navigate(`/tuiter/details/${id}`);
+      } catch (error) {
+          console.error(error);
+      }
     }
 
     return (

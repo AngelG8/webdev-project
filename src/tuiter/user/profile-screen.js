@@ -16,7 +16,7 @@ function ProfileScreen() {
     const [myLikes, setMyLikes] = useState([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    // let profile = currentUser;
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -75,7 +75,7 @@ function ProfileScreen() {
                 console.error(error);
             }
         };
-        fetchProfile();
+        // fetchProfile();
         fetchMyTuits();
         fetchMyFollowing();
         fetchMyFollowers();
@@ -126,6 +126,7 @@ function ProfileScreen() {
                             onChange={(event) => {
                                 const newProfile = { ...profile, firstName: event.target.value };
                                 setProfile(newProfile);
+                                // profile = newProfile;
                             }}
                         />
                     </div>
@@ -138,6 +139,7 @@ function ProfileScreen() {
                             onChange={(event) => {
                                 const newProfile = { ...profile, lastName: event.target.value };
                                 setProfile(newProfile);
+                                // profile = newProfile;
                             }}
                         />
                     </div>
@@ -150,6 +152,7 @@ function ProfileScreen() {
                             onChange={(event) => {
                                 const newProfile = { ...profile, email: event.target.value };
                                 setProfile(newProfile);
+                                // profile = newProfile;
                             }}
                         />
                     </div>
@@ -162,6 +165,7 @@ function ProfileScreen() {
                             onChange={(event) => {
                                 const newProfile = { ...profile, phone: event.target.value };
                                 setProfile(newProfile);
+                                // profile = newProfile;
                             }}
                         />
                     </div>
@@ -230,12 +234,12 @@ function ProfileScreen() {
                     <li className="list-group-item">
                         <div className="row">
                             <div className="col-2">
-                                <img width={70} className="float-end rounded-3" src={`./images/${tuit.image}`} />
+                                <img width={70} className="float-end rounded-3" src={`/images/${tuit.image}`} />
                             </div>
                             <div className="col-10">
                                 <i className="bi bi-x-lg float-end btn btn-danger rounded-pill float-end mt-2 ps-2 pe-2 fw-bold"
                                    onClick={() => deleteTuitHandler(tuit._id)}>Delete</i>
-                                <div><span className="fw-bolder">{tuit.username}</span> <i className="fas fa-check-circle wd-blue"></i> {tuit.username} • {tuit.time}</div>
+                                <div><span className="fw-bolder">{tuit.username}</span> <i className="fas fa-check-circle wd-blue"></i> @{tuit.username} • {tuit.time}</div>
                                 <div>{tuit.tuit}</div>
                             </div>
                         </div>

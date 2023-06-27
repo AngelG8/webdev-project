@@ -76,7 +76,7 @@ function DetailsScreen() {
 
     const handleprofileShark = async () => {
         try {
-          navigate("/tuiter/profile");
+          navigate("/tuiter/profile/6499e7d438647c48a11f31f8");
         } catch (error) {
           console.error(error);
         }
@@ -85,7 +85,7 @@ function DetailsScreen() {
     
     const handleprofileBear = async () => {
     try {
-        navigate("/tuiter/profile");
+        navigate("/tuiter/profile/6499e7f138647c48a11f31fb");
     } catch (error) {
         console.error(error);
     }
@@ -93,7 +93,7 @@ function DetailsScreen() {
     
     const handleprofileWhale = async () => {
     try {
-        navigate("/tuiter/profile");
+        navigate("/tuiter/profile/6499ed4238647c48a11f321a");
     } catch (error) {
         console.error(error);
     }

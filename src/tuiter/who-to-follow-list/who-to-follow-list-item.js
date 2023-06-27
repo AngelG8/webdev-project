@@ -6,15 +6,20 @@ import {Link} from "react-router-dom";
 
 const WhoToFollowListItem = ({whoToFollow}) => {
     const { currentUser} = useSelector((state) => state.user);
-    const [profile, setProfile] = useState(currentUser);
-    const [followed, setFollowed] = useState(false);
+    // const [profile, setProfile] = useState(currentUser);
+    // const [followed, setFollowed] = useState(false);
 
+    let isFollowed = false;
+    let myProfile = currentUser;
+    if (currentUser && currentUser.following && currentUser.following.includes(whoToFollow._id)) {
+        isFollowed = true;
+    }
     const dispatch = useDispatch();
-    useEffect(() => {
-        if (currentUser && currentUser.following && currentUser.following.includes(whoToFollow._id)) {
-            setFollowed(true);
-        }
-    }, [whoToFollow._id]);
+    // useEffect(() => {
+    //     if (currentUser && currentUser.following && currentUser.following.includes(whoToFollow._id)) {
+    //         setFollowed(true);
+    //     }
+    // }, [whoToFollow._id]);
 
     const addToFollowers = (userId, profileToEdit) => {
         let newFollowers;
@@ -61,9 +66,11 @@ const WhoToFollowListItem = ({whoToFollow}) => {
     }
 
     const handleFollow = async () => {
-        const newProfile = addToFollowing(whoToFollow._id, profile)
-        setProfile(newProfile);
-        setFollowed(true);
+        const newProfile = addToFollowing(whoToFollow._id, myProfile)
+        // setProfile(newProfile);
+        // setFollowed(true);
+        // myProfile = newProfile;
+        // isFollowed = true;
         try {
             await dispatch(updateUserThunk(newProfile));
         } catch (error) {
@@ -80,9 +87,11 @@ const WhoToFollowListItem = ({whoToFollow}) => {
     };
 
     const handleUnFollow = async () => {
-        const newProfile = removeFollowing(whoToFollow._id, profile)
-        setProfile(newProfile);
-        setFollowed(false);
+        const newProfile = removeFollowing(whoToFollow._id, myProfile)
+        // setProfile(newProfile);
+        // myProfile = newProfile;
+        // setFollowed(false);
+        // isFollowed = false;
         try {
             await dispatch(updateUserThunk(newProfile));
         } catch (error) {
@@ -105,21 +114,19 @@ const WhoToFollowListItem = ({whoToFollow}) => {
     return (
         <li className="list-group-item">
             <div className="row">
-                <div className="col-2">
-                    <img className="rounded-circle" height={48} src={`/images/${whoToFollow.avatarIcon}`} />
+                <div className="col-9">
+                    <Link className="nav-link" to={"/tuiter/profile/"+whoToFollow._id}
+                          style={{ textDecoration: 'underline'}}>
+                        <i className="fa-solid fa-heart"></i>   {whoToFollow.firstName} {whoToFollow.lastName}</Link>
+
                 </div>
-                <div className="col-8">
-                    <nav className="nav nav-tabs mb-2">
-                    <Link className="nav-link" to={"/tuiter/profile/"+whoToFollow._id}>{whoToFollow.firstName} {whoToFollow.lastName}</Link>
-                    </nav>
-                </div>
-                {!followed && <div className="col-2">
+                {!isFollowed && <div className="col-3">
                     <button onClick={handleFollow}
-                            className="btn btn-primary rounded-pill float-end">Follow
+                            className="btn btn-primary rounded-pill float-end" disabled={!currentUser}>Follow
                     </button>
                 </div>
                 }
-                {followed && <div className="col-2">
+                {isFollowed && <div className="col-3">
                     <button onClick={handleUnFollow}
                             className="btn btn-primary rounded-pill float-end">unFollow
                     </button>

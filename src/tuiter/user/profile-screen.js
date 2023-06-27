@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { profileThunk, logoutThunk, updateUserThunk } from "../services/auth-thunks";
+import { deleteTuitThunk } from "../services/tuits-thunks";
 import * as tuitsService from "../services/tuits-service";
 import * as whoService from "../services/who-service";
 import {Link} from "react-router-dom";
@@ -12,16 +13,10 @@ function ProfileScreen() {
     const [myTuits, setMyTuits] = useState([]);
     const [myFollowing, setMyFollowing] = useState([]);
     const [myFollowers, setMyFollowers] = useState([]);
+    const [myLikes, setMyLikes] = useState([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const save = async () => {
-        try {
-            await dispatch(updateUserThunk(profile));
-        } catch (e) {
-            alert(e);
-        }
-    };
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -59,10 +54,23 @@ function ProfileScreen() {
                 let followerIds = !profile.followers ? [] : profile.followers;
                 let follower = await Promise.all(followerIds.map(async followerId => {
                     const follower = await whoService.findUserById(followerId)
-                    console.log(follower)
+                    // console.log(follower)
                     return follower;
                 }))
                 setMyFollowers(follower);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        const fetchMyLikes = async () => {
+            try {
+                let tuitsId = !profile.likes ? [] : profile.likes;
+                let likeTuits = await Promise.all(tuitsId.map(async id => {
+                    const tuit = await whoService.findUserById(id)
+                    // console.log(follower)
+                    return tuit;
+                }))
+                setMyLikes(likeTuits);
             } catch (error) {
                 console.error(error);
             }
@@ -71,7 +79,8 @@ function ProfileScreen() {
         fetchMyTuits();
         fetchMyFollowing();
         fetchMyFollowers();
-    }, []);
+        fetchMyLikes();
+    }, [profile._id]);
 
     const handleLogout = async () => {
         await dispatch(logoutThunk());
@@ -84,6 +93,17 @@ function ProfileScreen() {
             console.error(error);
         }
     };
+    const deleteTuitHandler = async(id) => {
+        await dispatch(deleteTuitThunk(id));
+    }
+    if (!profile) {
+        return (
+            <div>
+                <h1>Profile Screen</h1>
+                <span>You need to login/register first.....</span>
+            </div>
+        );
+    }
     return (
         <div>
             <h1>Profile Screen</h1>
@@ -145,56 +165,101 @@ function ProfileScreen() {
                             }}
                         />
                     </div>
-                    <button onClick={handleUpdate} className="btn btn-primary">
+                    <button onClick={handleUpdate} className="btn btn-primary mt-2 mr-4">
                         Update
+                    </button>
+                    <button className="btn btn-primary mt-2 btn-danger" onClick={handleLogout}>
+                        Logout
                     </button>
                 </div>
             )}
-            <button className="btn btn-primary mt-2 btn-danger" onClick={handleLogout}>
-                Logout
-            </button>
-            <button className="btn btn-primary mt-2" onClick={save}>
-                Save
-            </button>
-            <ul className="list-group mt-2">
-                <li className="list-group-item">
-                    <h4>Following</h4>
-                    <div>{myFollowing.length ?? ""}</div>
-                </li>
-                <nav className="nav nav-tabs mb-2">
-                {
-                    myFollowing.map((user) => (
-                    <li className="list-group-item" key={user._id}>
-                        <Link className="nav-link" to={"/tuiter/profile/"+user._id}>{user.firstName} {user.lastName}</Link>
-                    </li>
-                ))}
-                </nav>
-            </ul>
+            <div>
+                <div className="row">
+                    <div className="col-6">
+                        <ul className="list-group mt-2">
+                            <li className="list-group-item">
+                                <div>
+                                    <i className="fa-solid fa-user"></i>
+                                    <span className="fw-bolder"> Following: </span> {myFollowing.length ?? ""}
+                                </div>
+                            </li>
 
-            <ul className="list-group mt-2">
-                <li className="list-group-item">
-                    <h4>Followers</h4>
-                    <div>{myFollowers.length ?? ""}</div>
-                </li>
-                <nav className="nav nav-tabs mb-2">
-                {
-                    myFollowers.map((user) => (
-                        <li className="list-group-item" key={user._id}>
-                            <Link className="nav-link" to={"/tuiter/profile/"+user._id}>{user.firstName} {user.lastName}</Link>
-                        </li>
-                    ))}
-                </nav>
-            </ul>
+                            {myFollowing.map((user) => (
+                                <li className="list-group-item" key={user._id}>
+                                    <Link className="nav-link"
+                                          to={"/tuiter/profile/"+user._id}
+                                          style={{ textDecoration: 'underline', color: 'blue'}}>
+                                        <i className="fa-solid fa-arrow-right"></i> {user.firstName} {user.lastName}
+                                    </Link>
+                                </li>
+                            ))}
 
-            {/*<pre>{JSON.stringify(myTuits, null, 2)}</pre>*/}
+                        </ul>
+                    </div>
+                    <div className="col-6">
+                        <ul className="list-group mt-2">
+                            <li className="list-group-item">
+                                <div>
+                                    <i className="fa-solid fa-user"></i>
+                                    <span className="fw-bolder"> Followers: </span> {myFollowers.length ?? ""}
+                                </div>
+                            </li>
+                            {myFollowers.map((user) => (
+                                <li className="list-group-item" key={user._id}>
+                                    <Link className="nav-link"
+                                          to={"/tuiter/profile/"+user._id}
+                                          style={{ textDecoration: 'underline',color: 'blue' }}>
+                                        <i className="fa-solid fa-arrow-right"></i>
+                                        {user.firstName} {user.lastName}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <br></br>
             <ul className="list-group mt-2">
                 <li className="list-group-item">
-                    <h4>My Tuits</h4>
+                    <div>
+                        <i className="fa-brands fa-square-twitter"></i>
+                        <span className="fw-bolder"> My Tuits: </span>
+                    </div>
                 </li>
                 {myTuits.map((tuit) => (
                     <li className="list-group-item">
-                        <div><span className="fw-bolder">{tuit.topic}</span> <i className="fas fa-check-circle wd-blue"></i> {tuit.handle} • {tuit.time}</div>
-                        <div>{tuit.tuit}</div>
+                        <div className="row">
+                            <div className="col-2">
+                                <img width={70} className="float-end rounded-3" src={`./images/${tuit.image}`} />
+                            </div>
+                            <div className="col-10">
+                                <i className="bi bi-x-lg float-end btn btn-danger rounded-pill float-end mt-2 ps-2 pe-2 fw-bold"
+                                   onClick={() => deleteTuitHandler(tuit._id)}>Delete</i>
+                                <div><span className="fw-bolder">{tuit.username}</span> <i className="fas fa-check-circle wd-blue"></i> {tuit.username} • {tuit.time}</div>
+                                <div>{tuit.tuit}</div>
+                            </div>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+            <ul className="list-group mt-2">
+                <li className="list-group-item">
+                    <div>
+                        <i className="fa-solid fa-heart"></i>
+                        <span className="fw-bolder"> My Likes: </span>
+                    </div>
+                </li>
+                {myLikes.map((tuit) => (
+                    <li className="list-group-item">
+                        <div className="row">
+                            <div className="col-2">
+                                <img width={70} className="float-end rounded-3" src={`./images/${tuit.image}`} />
+                            </div>
+                            <div className="col-10">
+                                <div><span className="fw-bolder">{tuit.username}</span> <i className="fas fa-check-circle wd-blue"></i> {tuit.username} • {tuit.time}</div>
+                                <div>{tuit.tuit}</div>
+                            </div>
+                        </div>
                     </li>
                 ))}
             </ul>

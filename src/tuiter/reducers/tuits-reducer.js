@@ -9,6 +9,13 @@ const initialState = {
     youtubeSearchResults: []
 }
 
+const storedSearchResults = localStorage.getItem('searchResults');
+if (storedSearchResults) {
+    const parsedResults = JSON.parse(storedSearchResults);
+    initialState.searchResults = parsedResults.tuits;
+    initialState.youtubeSearchResults = parsedResults.youtube;
+}
+
 const tuitsSlice = createSlice({
     name: 'tuits',
     initialState,
@@ -49,6 +56,8 @@ const tuitsSlice = createSlice({
             (state, { payload }) => {
                 state.searchResults = payload.tuits
                 state.youtubeSearchResults = payload.youtube
+                const storedResults = JSON.stringify(payload);
+                localStorage.setItem('searchResults', storedResults);
             },
     },
     reducers: {}

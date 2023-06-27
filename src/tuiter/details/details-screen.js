@@ -145,7 +145,7 @@ function DetailsScreen() {
     </div>
 </div>
 </li>
-    <TuitSearch tuits={searchResults} />
+    <TuitSearch tuits={"shark"} />
 </ul>
 
 </div>

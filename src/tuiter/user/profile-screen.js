@@ -80,7 +80,7 @@ function ProfileScreen() {
         fetchMyFollowing();
         fetchMyFollowers();
         fetchMyLikes();
-    }, [profile._id]);
+    }, []);
 
     const handleLogout = async () => {
         await dispatch(logoutThunk());
